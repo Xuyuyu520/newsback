@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xyc.news.mapper.NewsMapper" >
+  <resultMap id="BaseResultMap" type="com.xyc.news.pojo.News" >
+    <id column="cno" property="cno" jdbcType="VARCHAR" />
+    <result column="cname" property="cname" jdbcType="VARCHAR" />
+    <result column="tname" property="tname" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="enabled" property="enabled" jdbcType="BOOLEAN" />
+    <result column="update_time" property="updateTime" jdbcType="DATE" />
+    <result column="create_time" property="createTime" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    cno, cname,tname,url,enabled,update_time, create_time
+  </sql>
+  <select id="getNewsList" resultMap="BaseResultMap" parameterType="com.xyc.news.pojo.News">
+    select
+    <include refid="Base_Column_List" />
+    from news where 1=1
+    <if test="cno != null and cno != ''" >
+      and cno=#{cno,jdbcType=VARCHAR}
+    </if>
+    <if test="cname != null and cname != ''" >
+      and cname like concat('%', #{cname,jdbcType=VARCHAR}, '%')
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from news
+    where cno = #{cno,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from news
+    where cno = #{cno,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.xyc.news.pojo.News" >
+    insert into news (cno, cname,tname,url,enabled,update_time,
+      create_time)
+    values (#{cno,jdbcType=VARCHAR}, #{cname,jdbcType=VARCHAR}, #{tname,jdbcType=VARCHAR},#{url,jdbcType=VARCHAR},#{enabled,jdbcType=VARCHAR},#{updateTime,jdbcType=DATE},
+      #{createTime,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xyc.news.pojo.News" >
+    insert into news
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cno != null" >
+        cno,
+      </if>
+      <if test="cname != null" >
+        cname,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cno != null" >
+        #{cno,jdbcType=VARCHAR},
+      </if>
+      <if test="cname != null" >
+        #{cname,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=DATE},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xyc.news.pojo.News" >
+    update news
+    <set >
+      <if test="cname != null" >
+        cname = #{cname,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=DATE},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=DATE},
+      </if>
+    </set>
+    where cno = #{cno,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xyc.news.pojo.News" >
+    update news
+    set cname = #{cname,jdbcType=VARCHAR},
+    tname = #{tname,jdbcType=VARCHAR},
+    url = #{url,jdbcType=VARCHAR},
+    enabled = #{enabled,jdbcType=VARCHAR},
+    update_time = #{updateTime,jdbcType=DATE},
+    create_time = #{createTime,jdbcType=DATE}
+    where cno = #{cno,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xyc.news.mapper.FileInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.xyc.news.pojo.FileInfo" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="cno" property="cno" jdbcType="VARCHAR" />
+    <result column="resource_type" property="resourceType" jdbcType="VARCHAR" />
+    <result column="new_name" property="newName" jdbcType="VARCHAR" />
+    <result column="old_name" property="oldName" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="size" property="size" jdbcType="INTEGER" />
+    <result column="suffix" property="suffix" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="download_num" property="downloadNum" jdbcType="INTEGER" />
+    <result column="branch" property="branch" jdbcType="INTEGER" />
+    <result column="division" property="division" jdbcType="INTEGER" />
+    <result column="upload_time" property="uploadTime" jdbcType="DATE" />
+    <result column="update_time" property="updateTime" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, cno, resource_type, new_name, old_name, url, size, suffix, creator, type, download_num,
+    upload_time, branch, division
+  </sql>
+  <select id="getFileInfoList" parameterType="com.xyc.news.pojo.FileInfo" resultMap="BaseResultMap">
+    select
+    f.*,
+    ft.cName as typeName,
+    CONCAT(c.cname,'---',c.tname) as newsName,
+    ch.branch_name as branchName,
+    sec.division_name as divisionName
+    from file_info f,news c,branch ch,division sec,file_type ft
+    where f.cno=c.cno and f.branch = ch.branch_no and f.division = sec.division_no and f.type = ft.type_id
+    <if test="oldName != null and oldName != ''">
+      and f.old_name like concat('%', #{oldName,jdbcType=VARCHAR}, '%')
+    </if>
+    <if test="creator != null and creator != ''">
+      and f.creator=#{creator,jdbcType=VARCHAR}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from file_info
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from file_info
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.xyc.news.pojo.FileInfo" >
+    insert into file_info (id, cno, resource_type,
+      new_name, old_name, url,
+      size, suffix, creator,
+      type, download_num, upload_time, update_time,
+      branch, division)
+    values (#{id,jdbcType=VARCHAR}, #{cno,jdbcType=VARCHAR}, #{resourceType,jdbcType=VARCHAR},
+      #{newName,jdbcType=VARCHAR}, #{oldName,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR},
+      #{size,jdbcType=INTEGER}, #{suffix,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR},
+      #{type,jdbcType=VARCHAR}, #{downloadNum,jdbcType=INTEGER}, sysdate(),sysdate(),
+      #{branch,jdbcType=VARCHAR}, #{division,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xyc.news.pojo.FileInfo" >
+    insert into file_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="cno != null" >
+        cno,
+      </if>
+      <if test="resourceType != null" >
+        resource_type,
+      </if>
+      <if test="newName != null" >
+        new_name,
+      </if>
+      <if test="oldName != null" >
+        old_name,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="size != null" >
+        size,
+      </if>
+      <if test="suffix != null" >
+        suffix,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="downloadNum != null" >
+        download_num,
+      </if>
+      <if test="uploadTime != null" >
+        upload_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="branch != null" >
+        branch,
+      </if>
+      <if test="division != null" >
+        division,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="cno != null" >
+        #{cno,jdbcType=VARCHAR},
+      </if>
+      <if test="resourceType != null" >
+        #{resourceType,jdbcType=VARCHAR},
+      </if>
+      <if test="newName != null" >
+        #{newName,jdbcType=VARCHAR},
+      </if>
+      <if test="oldName != null" >
+        #{oldName,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null" >
+        #{size,jdbcType=INTEGER},
+      </if>
+      <if test="suffix != null" >
+        #{suffix,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="downloadNum != null" >
+        #{downloadNum,jdbcType=INTEGER},
+      </if>
+      <if test="uploadTime != null" >
+        #{uploadTime,jdbcType=DATE},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=DATE},
+      </if>
+      <if test="branch != null" >
+        #{branch,jdbcType=VARCHAR},
+      </if>
+      <if test="division != null" >
+        #{division,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xyc.news.pojo.FileInfo" >
+    update file_info
+    <set >
+      <if test="cno != null" >
+        cno = #{cno,jdbcType=VARCHAR},
+      </if>
+      <if test="resourceType != null" >
+        resource_type = #{resourceType,jdbcType=VARCHAR},
+      </if>
+      <if test="newName != null" >
+        new_name = #{newName,jdbcType=VARCHAR},
+      </if>
+      <if test="oldName != null" >
+        old_name = #{oldName,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null" >
+        size = #{size,jdbcType=INTEGER},
+      </if>
+      <if test="suffix != null" >
+        suffix = #{suffix,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="downloadNum != null" >
+        download_num = #{downloadNum,jdbcType=INTEGER},
+      </if>
+      <if test="uploadTime != null" >
+        upload_time = #{uploadTime,jdbcType=DATE},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=DATE},
+      </if>
+      <if test="branch != null" >
+        branch = #{branch,jdbcType=VARCHAR},
+      </if>
+      <if test="division != null" >
+        division = #{division,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xyc.news.pojo.FileInfo" >
+    update file_info
+    set cno = #{cno,jdbcType=VARCHAR},
+      resource_type = #{resourceType,jdbcType=VARCHAR},
+      new_name = #{newName,jdbcType=VARCHAR},
+      old_name = #{oldName,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      size = #{size,jdbcType=INTEGER},
+      suffix = #{suffix,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      download_num = #{downloadNum,jdbcType=INTEGER},
+      upload_time = #{uploadTime,jdbcType=DATE},
+      update_time =sysdate(),
+      branch = #{branch,jdbcType=VARCHAR},
+      division = #{division,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xyc.news.mapper.DivisionMapper" >
+  <resultMap id="BaseResultMap" type="com.xyc.news.pojo.Division" >
+    <id column="division_no" property="divisionNo" jdbcType="INTEGER" />
+    <result column="branch_no" property="branchNo" jdbcType="INTEGER" />
+    <result column="cno" property="cno" jdbcType="VARCHAR" />
+    <result column="division_name" property="divisionName" jdbcType="VARCHAR" />
+    <result column="enabled" property="enabled" jdbcType="BIT" />
+    <result column="update_time" property="updateTime" jdbcType="DATE" />
+    <result column="create_time" property="createTime" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    division_no, branch_no, cno, division_name, enabled, update_time, create_time
+  </sql>
+  <select id="getDivisionList" parameterType="com.xyc.news.pojo.Division" resultMap="BaseResultMap">
+    select
+    se.*,
+    CONCAT(c.cname,'---',c.tname) as newsName,
+    cp.branch_name as branchName
+    from division se,news c,branch cp  where se.cno=c.cno and se.branch_no=cp.branch_no
+    and se.cno=#{cno,jdbcType=VARCHAR}
+    and se.branch_no=#{branchNo,jdbcType=VARCHAR}
+  </select>
+  <select id="getBranchDivision" parameterType="com.xyc.news.pojo.Division" resultMap="BaseResultMap">
+    select
+    se.*,
+    CONCAT(c.cname,'---',c.tname) as newsName,
+    cp.branch_name as branchName
+    from division se,news c,branch cp  where se.cno=c.cno and se.branch_no=cp.branch_no
+    and se.cno=#{cno,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from division
+    where division_no = #{divisionNo,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete
+    from division
+    where division_no = #{divisionNo,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xyc.news.pojo.Division" >
+    insert into division (division_no, branch_no, cno,
+      division_name, enabled, update_time,
+      create_time)
+    values (#{divisionNo,jdbcType=INTEGER}, #{branchNo,jdbcType=INTEGER}, #{cno,jdbcType=VARCHAR},
+      #{divisionName,jdbcType=VARCHAR}, #{enabled,jdbcType=BIT}, #{updateTime,jdbcType=DATE},
+      #{createTime,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xyc.news.pojo.Division" >
+    insert into division
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="divisionNo != null" >
+        division_no,
+      </if>
+      <if test="branchNo != null" >
+        branch_no,
+      </if>
+      <if test="cno != null" >
+        cno,
+      </if>
+      <if test="divisionName != null" >
+        division_name,
+      </if>
+      <if test="enabled != null" >
+        enabled,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="divisionNo != null" >
+        #{divisionNo,jdbcType=INTEGER},
+      </if>
+      <if test="branchNo != null" >
+        #{branchNo,jdbcType=INTEGER},
+      </if>
+      <if test="cno != null" >
+        #{cno,jdbcType=VARCHAR},
+      </if>
+      <if test="divisionName != null" >
+        #{divisionName,jdbcType=VARCHAR},
+      </if>
+      <if test="enabled != null" >
+        #{enabled,jdbcType=BIT},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=DATE},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xyc.news.pojo.Division" >
+    update division
+    <set >
+      <if test="branchNo != null" >
+        branch_no = #{branchNo,jdbcType=INTEGER},
+      </if>
+      <if test="cno != null" >
+        cno = #{cno,jdbcType=VARCHAR},
+      </if>
+      <if test="divisionName != null" >
+        division_name = #{divisionName,jdbcType=VARCHAR},
+      </if>
+      <if test="enabled != null" >
+        enabled = #{enabled,jdbcType=BIT},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=DATE},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=DATE},
+      </if>
+    </set>
+    where division_no = #{divisionNo,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xyc.news.pojo.Division" >
+    update division
+    set branch_no = #{branchNo,jdbcType=INTEGER},
+      cno = #{cno,jdbcType=VARCHAR},
+      division_name = #{divisionName,jdbcType=VARCHAR},
+      enabled = #{enabled,jdbcType=BIT},
+      update_time = #{updateTime,jdbcType=DATE},
+      create_time = #{createTime,jdbcType=DATE}
+    where division_no = #{divisionNo,jdbcType=INTEGER}
+  </update>
+</mapper>
