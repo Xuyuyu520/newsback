@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class LoginController {
     @GetMapping("/login_page")
     public Wrapper<String> daylist() {
+
         return WrapMapper.wrap(Wrapper.NOT_LOGIN_CODE, Wrapper.NOT_LOGIN_MESSAGE,"请登录");
     }
 

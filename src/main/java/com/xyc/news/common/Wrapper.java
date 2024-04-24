@@ -48,6 +48,8 @@ public class Wrapper<T> implements Serializable {
      * 错误信息：未登录提示
      */
     public static final String NOT_LOGIN_MESSAGE = "您需要先登录才能访问！";
+    public static final String USERNAME_ERROR = "用户名错误！";
+    public static final String PASSWORD_ERROR = "密码错误！";
 
     /**
      * 错误码：参数非法

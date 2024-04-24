@@ -46,3 +46,9 @@
 - 云原生容器平台
 
 
+  UploadController修改：
+
+String parentDir = System.getProperty("user.dir");
+
+FileHandlerConfig修改：
+registry.addResourceHandler("/upload/**").addResourceLocations("File:"+System.getProperty("user.dir")+"/upload/");

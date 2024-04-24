@@ -20,6 +20,7 @@ public class FileHandlerConfig extends WebMvcConfigurationSupport {
         registry.addResourceHandler("/upload/**").addResourceLocations("File:"+System.getProperty("user.dir")+"/upload/");
         // registry.addResourceHandler("/upload/**").addResourceLocations("File:"+parentDir+"upload/");
         registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
+
         super.addResourceHandlers(registry);
     }
 
