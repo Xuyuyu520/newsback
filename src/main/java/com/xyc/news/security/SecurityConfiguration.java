@@ -1,6 +1,5 @@
 package com.xyc.news.security;
 
-import com.xyc.news.configure.CustomAuthenticationFailureHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -52,7 +51,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.and().formLogin().loginPage("/login_page")
 				// security提供的登陆服务
 				.loginProcessingUrl("/login") // 参数 /login?username=xx&password=xx
-				.failureHandler(new CustomAuthenticationFailureHandler()) // 配置自定义的认证失败处理器
 				// 开启跨域 cors()
 				.and().cors().configurationSource(corsConfigurationSource())
 				.and().csrf().disable()
