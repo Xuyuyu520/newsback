@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `article` (
   PRIMARY KEY (`article_id`) USING BTREE,
   KEY `type` (`type`) USING BTREE,
   CONSTRAINT `article_ibfk_1` FOREIGN KEY (`type`) REFERENCES `category` (`type_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='文章';
 
 -- 正在导出表  newsmanage.article 的数据：~5 rows (大约)
 INSERT INTO `article` (`article_id`, `article_name`, `article_url`, `author`, `type`, `price`, `count`) VALUES
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `category` (
   `eName` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `cName` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   PRIMARY KEY (`type_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='新闻文章类型';
 
 -- 正在导出表  newsmanage.category 的数据：~0 rows (大约)
 INSERT INTO `category` (`type_id`, `eName`, `cName`) VALUES
@@ -118,7 +118,7 @@ CREATE TABLE IF NOT EXISTS `file_info` (
   CONSTRAINT `file_ibfk_4` FOREIGN KEY (`division`) REFERENCES `division` (`division_no`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- 正在导出表  newsmanage.file_info 的数据：~0 rows (大约)
+-- 正在导出表  newsmanage.file_info 的数据：~2 rows (大约)
 INSERT INTO `file_info` (`id`, `cno`, `resource_type`, `new_name`, `old_name`, `url`, `size`, `suffix`, `type`, `creator`, `download_num`, `branch`, `division`, `upload_time`, `update_time`) VALUES
 	('5b978c294cbe4c21a18377d078383a5f', '12333', 'image/jpeg', 'e255f6c376aa40c69e4f9ac1c6ecc4e4.jpeg', '4k1.jpeg', '/upload/resource/20240422/e255f6c376aa40c69e4f9ac1c6ecc4e4.jpeg', 329.00, '.jpeg', 1, '张三', 0, 1, 2, '2024-04-22 19:29:20', '2024-04-22 19:29:20');
 
@@ -168,8 +168,8 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 -- 正在导出表  newsmanage.user 的数据：~2 rows (大约)
 INSERT INTO `user` (`username`, `nickname`, `password`, `phone`, `created`, `role`) VALUES
-	('admin', '小徐', '$2a$10$yd62eVgXWnWo4.sVdqt5dO.of2hNikOhBUAmTmy6qG1dfEiUbUioe', '123456', '2024-04-21 21:00:00', 'admin'),
-	('user', '用户', '$2a$10$ssLY5/B0W4mE6UL5uvbareEbWT.EAGzG.ak6OX8LzrAVJFyten9r2', '123', '2024-04-22 21:03:14', 'user');
+	('admin', 'admin', '$2a$10$4ZPwrSJu2TPy4QKwl0p7Y.6N5EC1uqK8LWah4jAuQrKtiB3EsA7Ii', '111', '2024-04-24 20:52:30', 'admin'),
+	('user', '搜索', '$2a$10$HRmDETxvK74LdJylIySCNuGuQXugibEvspqaGD44/gxfeUFe8pQjm', '17596079532', '2024-04-24 20:35:55', 'user');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

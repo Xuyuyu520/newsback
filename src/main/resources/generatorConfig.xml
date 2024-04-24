@@ -11,7 +11,7 @@
         </commentGenerator>
 
         <!--数据库连接参数 -->
-        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/newsManage?useSSL=false" userId="root" password="111111">
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/newsmanage?useSSL=false" userId="root" password="123456">
         </jdbcConnection>
         <!-- 非必需，类型处理器，在数据库类型和java类型之间的转换控制-->
         <javaTypeResolver>
